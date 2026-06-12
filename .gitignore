@@ -2,3 +2,5 @@
 .git
 **/PLAN.md
 .claude
+**/obj
+**/bin
