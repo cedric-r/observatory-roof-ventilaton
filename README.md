@@ -109,3 +109,11 @@ On first run, update `appsettings.json`:
 | Serial concurrency | SemaphoreSlim queue with CancellationToken |
 | Night-open hazard | Close on EndTime with hysteresis |
 | Graceful shutdown | Stop roof motion, persist state, exit cleanly |
+
+## License
+
+Copyright © 2026 Cedric Raguenaud
+
+This program is free software: you can redistribute it and/or modify it under the terms of the **GNU General Public License v3.0** (GPL-3.0-only) as published by the Free Software Foundation.
+
+See [LICENSE](./LICENSE) for the full text, or visit [https://www.gnu.org/licenses/gpl-3.0.html](https://www.gnu.org/licenses/gpl-3.0.html).
