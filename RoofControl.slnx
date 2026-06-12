@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/RoofControl.App/RoofControl.App.csproj" />
+    <Project Path="src/RoofControl.Core/RoofControl.Core.csproj" />
+    <Project Path="src/RoofControl.Decision/RoofControl.Decision.csproj" />
+    <Project Path="src/RoofControl.Talon6/RoofControl.Talon6.csproj" />
+    <Project Path="src/RoofControl.Weather/RoofControl.Weather.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/RoofControl.Tests/RoofControl.Tests.csproj" />
+  </Folder>
+</Solution>

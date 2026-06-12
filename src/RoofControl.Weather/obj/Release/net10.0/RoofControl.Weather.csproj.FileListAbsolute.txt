@@ -1,0 +1,12 @@
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/bin/Release/net10.0/RoofControl.Weather.deps.json
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/bin/Release/net10.0/RoofControl.Weather.dll
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/bin/Release/net10.0/RoofControl.Core.dll
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/obj/Release/net10.0/RoofControl.Weather.csproj.AssemblyReference.cache
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/obj/Release/net10.0/RoofControl.Weather.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/obj/Release/net10.0/RoofControl.Weather.AssemblyInfoInputs.cache
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/obj/Release/net10.0/RoofControl.Weather.AssemblyInfo.cs
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/obj/Release/net10.0/RoofControl.Weather.csproj.CoreCompileInputs.cache
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/obj/Release/net10.0/RoofCont.017E72D8.Up2Date
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/obj/Release/net10.0/RoofControl.Weather.dll
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/obj/Release/net10.0/refint/RoofControl.Weather.dll
+/mnt/katsumi/data/roofcontrol/src/RoofControl.Weather/obj/Release/net10.0/ref/RoofControl.Weather.dll

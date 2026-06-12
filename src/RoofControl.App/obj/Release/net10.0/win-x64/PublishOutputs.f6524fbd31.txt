@@ -1,0 +1,2 @@
+/mnt/katsumi/data/roofcontrol/publish/win-x64/appsettings.json
+/mnt/katsumi/data/roofcontrol/publish/win-x64/RoofControl.App.exe
