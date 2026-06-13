@@ -32,7 +32,7 @@ RoofControl/
 │   ├── RoofControl.Decision/       # Decision engine, hysteresis, cloud classifier
 │   └── RoofControl.App/            # Background workers, DI, Program.cs
 ├── tests/
-│   └── RoofControl.Tests/          # xUnit tests (54 tests)
+│   └── RoofControl.Tests/          # xUnit tests (56 tests)
 └── README.md
 ```
 
