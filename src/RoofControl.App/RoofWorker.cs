@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 // </copyright>
 
+using System.Diagnostics;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RoofControl.App;
@@ -154,6 +155,8 @@ public sealed class RoofWorker : BackgroundService
                         if (!overridden && _lastRoofStatus?.PositionTicks > 0)
                         {
                             await ExecuteSafeAsync(() => _roofController.CloseAsync(stoppingToken), stoppingToken);
+                            if (_lastRoofStatus?.PositionTicks > 0)
+                                await TriggerAutoShutdownAsync(stoppingToken);
                         }
                         lastDecision = now;
                         continue;
@@ -175,6 +178,7 @@ public sealed class RoofWorker : BackgroundService
                                 await ExecuteSafeAsync(
                                     () => _roofController.CloseAsync(stoppingToken),
                                     stoppingToken);
+                                await TriggerAutoShutdownAsync(stoppingToken);
                                 break;
 
                             case DecisionAction.Stop:
@@ -210,6 +214,62 @@ public sealed class RoofWorker : BackgroundService
         }
 
         _logger.LogInformation("RoofWorker stopped");
+    }
+
+    private async Task TriggerAutoShutdownAsync(CancellationToken ct)
+    {
+        if (!_config.ShutdownTrigger.Enabled)
+            return;
+
+        _logger.LogWarning("SHUTDOWN TRIGGER: Roof closed automatically, waiting {Delay}s before system shutdown",
+            _config.ShutdownTrigger.DelaySeconds);
+
+        // Wait for roof to reach fully closed position
+        try
+        {
+            var pollStart = DateTime.UtcNow;
+            var maxPollTime = TimeSpan.FromSeconds(30);
+
+            while (DateTime.UtcNow - pollStart < maxPollTime)
+            {
+                var status = await _roofController.GetStatusAsync(ct);
+                if (status.State == RoofState.Closed || status.RoofTotallyClosed)
+                {
+                    _logger.LogInformation("SHUTDOWN TRIGGER: Roof confirmed fully closed");
+                    break;
+                }
+                await Task.Delay(2000, ct);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "SHUTDOWN TRIGGER: Could not confirm roof closed, proceeding with shutdown anyway");
+        }
+
+        // Give operator a chance to abort via Ctrl+C during delay window
+        _logger.LogWarning("SHUTDOWN TRIGGER: Initiating system shutdown in {DelaySeconds}s. Press Ctrl+C to abort.",
+            _config.ShutdownTrigger.DelaySeconds);
+        await Task.Delay(TimeSpan.FromSeconds(_config.ShutdownTrigger.DelaySeconds), ct);
+
+        _logger.LogWarning("SHUTDOWN TRIGGER: Executing: {Command}", _config.ShutdownTrigger.Command);
+        try
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = OperatingSystem.IsWindows() ? "cmd.exe" : "/bin/sh",
+                Arguments = OperatingSystem.IsWindows()
+                    ? $"/c {_config.ShutdownTrigger.Command}"
+                    : $"-c \"{_config.ShutdownTrigger.Command}\"",
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            using var proc = Process.Start(psi);
+            _logger.LogInformation("SHUTDOWN TRIGGER: Shutdown command issued (pid={Pid})", proc?.Id);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "SHUTDOWN TRIGGER: Failed to execute shutdown command");
+        }
     }
 
     private async Task ExecuteSafeAsync(Func<Task> action, CancellationToken ct)

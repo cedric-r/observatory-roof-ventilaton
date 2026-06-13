@@ -34,6 +34,7 @@ public sealed class RoofControlConfig
     public RetryConfig Retry { get; set; } = new();
     public SerializationConfig Serialization { get; set; } = new();
     public OverrideConfig Override { get; set; } = new();
+    public ShutdownTriggerConfig ShutdownTrigger { get; set; } = new();
 }
 
 public sealed class Talon6Config
@@ -163,4 +164,15 @@ public sealed class OverrideConfig
 {
     [Required, MinLength(1)]
     public string FilePath { get; set; } = "/etc/roofcontrol/override.flag";
+}
+
+public class ShutdownTriggerConfig
+{
+    public bool Enabled { get; set; } = false;
+
+    [Range(0, 600)]
+    public int DelaySeconds { get; set; } = 60;
+
+    [Required, MinLength(1)]
+    public string Command { get; set; } = "shutdown -h now";
 }

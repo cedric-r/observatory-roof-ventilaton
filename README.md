@@ -52,6 +52,7 @@ Configuration is in `appsettings.json`. Key sections:
 | `FailSafe` | Max weather age, serial retry limits |
 | `Serialization` | State file path for power-loss recovery |
 | `Override` | File-based operator override flag path |
+| `ShutdownTrigger` | Auto-shutdown after automatic close (disabled by default) |
 
 ## How It Works
 
@@ -109,6 +110,7 @@ On first run, update `appsettings.json`:
 | Serial concurrency | SemaphoreSlim queue with CancellationToken |
 | Night-open hazard | Close on EndTime with hysteresis |
 | Graceful shutdown | Stop roof motion, persist state, exit cleanly |
+| Auto-shutdown after close | Optionally shut down PC after automatic roof close (ESC/Ctrl+C excluded) |
 
 ## License
 
