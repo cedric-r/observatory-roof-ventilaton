@@ -152,19 +152,20 @@ try
 
     lifetime.ApplicationStopping.Register(async () =>
     {
-        loggerShutdown.LogInformation("Application stopping — initiating graceful shutdown");
+        loggerShutdown.LogInformation("Application stopping — closing roof");
 
         var controller = host.Services.GetRequiredService<IRoofController>();
         try
         {
-            // Stop any roof motion
-            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await controller.StopAsync(cts.Token);
-            loggerShutdown.LogInformation("Roof motion stopped");
+            // Close the roof (safety-aware Park command) — this also handles
+            // stopping any in-progress motion before transitioning to closed.
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await controller.CloseAsync(cts.Token);
+            loggerShutdown.LogInformation("Roof closed");
         }
         catch (Exception ex)
         {
-            loggerShutdown.LogWarning(ex, "Error stopping roof during shutdown");
+            loggerShutdown.LogWarning(ex, "Error closing roof during shutdown");
         }
 
         // Persist current state
