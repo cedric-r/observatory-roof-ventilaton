@@ -1,0 +1,55 @@
+2026-06-16 07:00:46.020 +00:00 [INF] RoofControl starting
+2026-06-16 07:00:47.699 +00:00 [INF] ESC shutdown monitor started — press ESC to close roof and exit
+2026-06-16 07:00:47.700 +00:00 [INF] RoofWorker starting
+2026-06-16 07:00:47.701 +00:00 [DBG] No console available, ESC monitor disabled
+2026-06-16 07:00:47.702 +00:00 [INF] No state file found at /var/lib/roofcontrol/state.json, using defaults
+2026-06-16 07:00:47.699 +00:00 [INF] Safety watchdog started (maxWeatherAge=90s, maxRetries=3)
+2026-06-16 07:00:47.703 +00:00 [INF] Recovered state: Closed at 0 ticks
+2026-06-16 07:00:47.707 +00:00 [DBG] Fetching weather data from 
+2026-06-16 07:00:47.732 +00:00 [INF] Application stopping — closing roof
+2026-06-16 07:00:47.734 +00:00 [ERR] Unexpected error fetching weather data
+System.InvalidOperationException: An invalid request URI was provided. Either the request URI must be an absolute URI or BaseAddress must be set.
+   at System.Net.Http.HttpClient.PrepareRequestMessage(HttpRequestMessage request)
+   at System.Net.Http.HttpClient.GetStringAsync(Uri requestUri, CancellationToken cancellationToken)
+   at RoofControl.Weather.HttpWeatherReader.ReadAsync(CancellationToken ct) in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Weather/HttpWeatherReader.cs:line 51
+2026-06-16 07:00:47.765 +00:00 [INF] Safety watchdog stopped
+2026-06-16 07:00:47.766 +00:00 [WRN] Error closing roof during shutdown
+System.UnauthorizedAccessException: Access to the port 'COM4' is denied.
+ ---> System.IO.IOException: No such file or directory
+   --- End of inner exception stack trace ---
+   at System.IO.Ports.SafeSerialDeviceHandle.Open(String portName)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean _1, Byte _2)
+   at System.IO.Ports.SerialPort.Open()
+   at RoofControl.Talon6.Talon6Controller.EnsureConnectedAsync(CancellationToken ct) in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 118
+   at RoofControl.Talon6.Talon6Controller.<>c__DisplayClass12_0.<<CloseAsync>b__0>d.MoveNext() in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 92
+--- End of stack trace from previous location ---
+   at RoofControl.Talon6.Talon6Controller.DispatchCommandAsync(Func`1 action, CancellationToken ct) in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 185
+   at RoofControl.Talon6.Talon6Controller.CloseAsync(CancellationToken ct) in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 90
+   at Program.<>c__DisplayClass0_0.<<<Main>$>b__3>d.MoveNext() in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.App/Program.cs:line 163
+2026-06-16 07:00:47.765 +00:00 [WRN] Could not query initial roof status; will retry on first cycle
+System.UnauthorizedAccessException: Access to the port 'COM4' is denied.
+ ---> System.IO.IOException: No such file or directory
+   --- End of inner exception stack trace ---
+   at System.IO.Ports.SafeSerialDeviceHandle.Open(String portName)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean _1, Byte _2)
+   at System.IO.Ports.SerialPort.Open()
+   at RoofControl.Talon6.Talon6Controller.EnsureConnectedAsync(CancellationToken ct) in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 118
+   at RoofControl.Talon6.Talon6Controller.<>c__DisplayClass8_0.<<GetStatusAsync>b__0>d.MoveNext() in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 55
+--- End of stack trace from previous location ---
+   at RoofControl.Talon6.Talon6Controller.DispatchCommandAsync[T](Func`1 action, CancellationToken ct) in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 178
+   at RoofControl.Talon6.Talon6Controller.GetStatusAsync(CancellationToken ct) in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 53
+   at RoofControl.App.RoofWorker.ExecuteAsync(CancellationToken stoppingToken) in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.App/RoofWorker.cs:line 73
+2026-06-16 07:00:47.779 +00:00 [WRN] Error persisting state during shutdown
+System.UnauthorizedAccessException: Access to the port 'COM4' is denied.
+ ---> System.IO.IOException: No such file or directory
+   --- End of inner exception stack trace ---
+   at System.IO.Ports.SafeSerialDeviceHandle.Open(String portName)
+   at System.IO.Ports.SerialStream..ctor(String portName, Int32 baudRate, Parity parity, Int32 dataBits, StopBits stopBits, Int32 readTimeout, Int32 writeTimeout, Handshake handshake, Boolean dtrEnable, Boolean rtsEnable, Boolean _1, Byte _2)
+   at System.IO.Ports.SerialPort.Open()
+   at RoofControl.Talon6.Talon6Controller.EnsureConnectedAsync(CancellationToken ct) in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 118
+   at RoofControl.Talon6.Talon6Controller.<>c__DisplayClass8_0.<<GetStatusAsync>b__0>d.MoveNext() in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 55
+--- End of stack trace from previous location ---
+   at RoofControl.Talon6.Talon6Controller.DispatchCommandAsync[T](Func`1 action, CancellationToken ct) in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 178
+   at RoofControl.Talon6.Talon6Controller.GetStatusAsync(CancellationToken ct) in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.Talon6/Talon6Controller.cs:line 53
+   at Program.<>c__DisplayClass0_0.<<<Main>$>b__3>d.MoveNext() in /mnt/katsumi/data/observatory-roof-ventilaton/src/RoofControl.App/Program.cs:line 174
+2026-06-16 07:00:47.779 +00:00 [INF] RoofWorker stopped

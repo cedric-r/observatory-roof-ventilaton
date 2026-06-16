@@ -89,8 +89,9 @@ public sealed class DecisionEngine : IDecisionEngine
         var localTime = localNow.TimeOfDay;
         var isDaytime = IsDaytime(localTime);
 
-        _logger.LogDebug("Decision: local={LocalTime:HH:mm}, day={IsDaytime}",
-            localTime, isDaytime);
+        var localOffset = _timezone.GetUtcOffset(localNow);
+        _logger.LogDebug("Decision: local={LocalTime:yyyy-MM-dd HH:mm:ss} offset={Offset:+HH:mm} tz={Timezone}, day={IsDaytime}",
+            localNow, localOffset, _timezone.Id, isDaytime);
 
         // Night: close roof (with hysteresis to prevent rapid toggling at twilight edges)
         if (!isDaytime)
